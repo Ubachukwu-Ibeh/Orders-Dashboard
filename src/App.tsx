@@ -1,29 +1,13 @@
-import React, { useReducer } from "react";
+import React from "react";
+import ProductTable from "./pages/OrdersPage/components/ProductTable/ProductTable";
+import Orders from "./pages/OrdersPage/components/Orders/Orders";
 
-//state management
-import { IStoreContext } from "./utils/interfaces";
-import reducer from "./common/reducer";
-import StoreContext from "./common/store";
-
-//components
-import Display from "./components/Display";
-
-export const AppContext: React.Context<IStoreContext> = React.createContext(
-  StoreContext
-);
-
-const App: React.FC = (): JSX.Element => {
-  const [state, dispatch] = useReducer(reducer, StoreContext);
-  const contextValue = { ...state, dispatch: dispatch };
+const App = () => {
   return (
-    <AppContext.Provider value={contextValue}>
-      <div>
-        <button onClick={() => dispatch({ type: "CLICK" })}>
-          click to update
-        </button>
-        <Display {...contextValue} />
-      </div>
-    </AppContext.Provider>
+    <div>
+      <Orders />
+      {/* <ProductTable /> */}
+    </div>
   );
 };
 export default App;
