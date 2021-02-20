@@ -33,7 +33,7 @@ const Product: React.FC<IProductData> = props => {
 
   return (
     <tr
-      className={selected ? Styles.selected : undefined}
+      className={selected ? Styles.selected : Styles.default}
       onClick={() => handleSelect()}>
       <td>
         <div
