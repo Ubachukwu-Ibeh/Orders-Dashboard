@@ -14,7 +14,7 @@ const orderReducer = (state: ISelectedProducts, action: IOrderAction) => {
       return { ...state };
     case "REMOVE_PRODUCT":
       const product = Object.keys(state.selectedProducts).find(
-        name => Number(name.slice(-1)) === action.payload.id
+        name => name.slice(0, 4) + action.payload.id === name
       );
       if (product) {
         delete state.selectedProducts[product];
@@ -34,6 +34,12 @@ const orderReducer = (state: ISelectedProducts, action: IOrderAction) => {
       productToDelete &&
         state.preSelect.splice(state.preSelect.indexOf(productToDelete), 1);
       setItem(state);
+      return { ...state };
+    case "PRE_REPLACE_PRODUCT":
+      const newData = action.payload.productData;
+      if (newData) {
+        state.preSelect[action.payload.id] = newData;
+      }
       return { ...state };
     default:
       return state;

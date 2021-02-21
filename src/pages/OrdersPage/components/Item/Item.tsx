@@ -62,7 +62,7 @@ const Item = (props: IItemProps) => {
           onMouseLeave={() => hideOptions()}>
           <div className={Styles.options}>
             <button onClick={e => e.stopPropagation()}>...</button>
-            {optionsIsOpen ? <Options /> : <></>}
+            {optionsIsOpen ? <Options {...props} /> : <></>}
           </div>
         </td>
       </tr>

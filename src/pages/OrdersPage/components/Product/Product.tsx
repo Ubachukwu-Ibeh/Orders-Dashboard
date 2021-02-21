@@ -13,6 +13,7 @@ const Product: React.FC<IProductData> = props => {
 
   const setQuantity = (e: React.MouseEvent, action: string) => {
     e.stopPropagation();
+    if (!selected) handleSelect();
     const { quantity } = productData;
     if (action === "increase") {
       if (quantity === 10) return;
@@ -22,6 +23,13 @@ const Product: React.FC<IProductData> = props => {
       productData.quantity -= 1;
     }
     productData.total = productData.quantity * productData.price;
+    ordersContext.dispatch({
+      type: ordersActions.PRE_REPLACE_PRODUCT,
+      payload: {
+        id: id,
+        productData: { ...productData }
+      }
+    });
     setProductData({ ...productData });
   };
 
