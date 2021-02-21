@@ -9,17 +9,7 @@ const Product: React.FC<IProductData> = props => {
   const ordersContext = useContext(OrdersContext);
   const [productData, setProductData] = useState({ ...props });
   const [arrowsVisible, setArrowsVisible] = useState(false);
-  const {
-    color,
-    product_id,
-    name,
-    price,
-    discount,
-    id,
-    hasBeenSelected,
-    quantity,
-    total
-  } = productData;
+  const { id, hasBeenSelected } = productData;
 
   const setQuantity = (e: React.MouseEvent, action: string) => {
     e.stopPropagation();
@@ -79,20 +69,20 @@ const Product: React.FC<IProductData> = props => {
     <tr
       className={handleSelectedStatus()}
       onClick={() => handleSelect()}
-      onMouseOver={() => revealArrows()}
+      onMouseEnter={() => revealArrows()}
       onMouseLeave={() => hideArrows()}>
       <td>
         <div
           className={Styles.product_img}
-          style={{ backgroundColor: color }}></div>
+          style={{ backgroundColor: productData.color }}></div>
       </td>
-      <td>{product_id}</td>
-      <td>{name}</td>
+      <td>{productData.product_id}</td>
+      <td>{productData.name}</td>
 
-      <td>${price}</td>
+      <td>${productData.price}</td>
       <td>
         <div className={Styles.quantity}>
-          <p>{quantity} x</p>
+          <p>{productData.quantity} x</p>
           {arrowsVisible ? (
             <div>
               <p onClick={e => setQuantity(e, "increase")}>▲</p>
@@ -103,8 +93,8 @@ const Product: React.FC<IProductData> = props => {
           )}
         </div>
       </td>
-      <td>{discount}%</td>
-      <td>${total}</td>
+      <td>{productData.discount}%</td>
+      <td>${productData.total}</td>
     </tr>
   );
 };

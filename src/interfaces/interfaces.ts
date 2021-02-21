@@ -22,7 +22,7 @@ export interface IOrderAction {
 interface ISelected {
   [name: string]: IItem;
 }
-interface IItem {
+export interface IItem {
   [name: string]: IProductData;
 }
 export interface ISelectedProducts {

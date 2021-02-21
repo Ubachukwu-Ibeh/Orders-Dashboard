@@ -1,55 +1,31 @@
 import React, { useState, useEffect, useContext } from "react";
 import Styles from "./style/Item.module.scss";
 import { IItemProps, IItemDisplay } from "../../../../interfaces/interfaces";
-import { getRandom } from "../../../../utils/productGenerator";
 import { OrdersContext } from "../Orders/Orders";
 import Product from "../Product/Product";
+import resolveData from "./resolveData";
+import Options from "../Options/Options";
 
 const Item = (props: IItemProps) => {
   const { id } = props;
   const [itemData, setItemData] = useState<IItemDisplay>({});
+  const [optionsIsOpen, setOptionsIsOpen] = useState(false);
   const ordersContext = useContext(OrdersContext);
   const itemObject = ordersContext.selectedProducts[`item${id}`];
-  const {
-    order_id,
-    time,
-    rating,
-    total,
-    profit,
-    shipping,
-    discount,
-    grandTotal
-  } = itemData;
+  const { rating } = itemData;
   const [childerAreOpen, setChildrenAreOpen] = useState(false);
 
   const openChildren = () => {
     setChildrenAreOpen(!childerAreOpen);
   };
+  const showOptions = () => {
+    setOptionsIsOpen(true);
+  };
+  const hideOptions = () => {
+    setOptionsIsOpen(false);
+  };
   useEffect(() => {
-    const totalPrice = Object.keys(itemObject).reduce((prev, product) => {
-      const price = itemObject[product].total;
-      return Number((price + prev).toFixed(2));
-    }, 0);
-    const totalDiscount = Object.keys(itemObject).reduce((prev, product) => {
-      const discount = itemObject[product].discount;
-      return Number(
-        ((discount / 100) * itemObject[product].price + prev).toFixed(2)
-      );
-    }, 0);
-    const shipping = getRandom(10, 50);
-    const data = {
-      order_id: getRandom(1000, 30000),
-      time: getRandom(0, 10),
-      rating: [getRandom(1, 5), getRandom(0, 10)],
-
-      total: totalPrice,
-
-      profit: `$${getRandom(50, 500)}`,
-      shipping: shipping,
-      discount: totalDiscount,
-      grandTotal: (totalPrice + shipping - totalDiscount).toFixed(2)
-    };
-    setItemData({ ...data });
+    setItemData({ ...resolveData(itemObject) });
   }, []);
 
   return (
@@ -63,11 +39,11 @@ const Item = (props: IItemProps) => {
             onClick={e => e.stopPropagation()}
           />
         </td>
-        <td>{order_id}</td>
-        <td>{time} min ago</td>
+        <td>{itemData.order_id}</td>
+        <td>{itemData.time} min ago</td>
         <td>{rating && `${rating[0]}.${rating[1]}`}</td>
-        <td>${total}</td>
-        <td>{profit}</td>
+        <td>${itemData.total}</td>
+        <td>{itemData.profit}</td>
         <td>
           <div className={Styles.status}>
             <p>
@@ -75,8 +51,13 @@ const Item = (props: IItemProps) => {
             </p>
           </div>
         </td>
-        <td>
-          <button onClick={e => e.stopPropagation()}>...</button>
+        <td
+          onMouseEnter={() => showOptions()}
+          onMouseLeave={() => hideOptions()}>
+          <div className={Styles.options}>
+            <button onClick={e => e.stopPropagation()}>...</button>
+            {optionsIsOpen ? <Options /> : <></>}
+          </div>
         </td>
       </tr>
       {childerAreOpen ? (
@@ -108,22 +89,22 @@ const Item = (props: IItemProps) => {
                   <tr className={Styles.orderSummary}>
                     <td colSpan={3}></td>
                     <td colSpan={3}>Subtotal</td>
-                    <td colSpan={2}>${total}</td>
+                    <td colSpan={2}>${itemData.total}</td>
                   </tr>
                   <tr className={Styles.orderSummary}>
                     <td colSpan={3}></td>
                     <td colSpan={3}>Shipping</td>
-                    <td colSpan={2}>${shipping}</td>
+                    <td colSpan={2}>${itemData.shipping}</td>
                   </tr>
                   <tr className={Styles.orderSummary}>
                     <td colSpan={3}></td>
                     <td colSpan={3}>Discount</td>
-                    <td colSpan={2}>${discount}</td>
+                    <td colSpan={2}>${itemData.discount}</td>
                   </tr>
                   <tr className={Styles.orderSummary}>
                     <td colSpan={3}></td>
                     <td colSpan={3}>Total</td>
-                    <td colSpan={2}>${grandTotal}</td>
+                    <td colSpan={2}>${itemData.grandTotal}</td>
                   </tr>
                 </tbody>
               </table>
