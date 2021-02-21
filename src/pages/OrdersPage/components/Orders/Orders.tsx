@@ -4,10 +4,12 @@ import { selectedProducts } from "../../../../stores/SelectedProducts_store";
 import ProductTable from "../ProductTable/ProductTable";
 import orderReducer from "../../../../reducers/Orders_reducer";
 import Item from "../Item/Item";
-import Product from "../Product/Product";
-import { getItem } from "../../../../utils/localStorage";
+import { ISelectedProducts } from "../../../../interfaces/interfaces";
+// import { getItem } from "../../../../utils/localStorage";
 
-export const OrdersContext = React.createContext(selectedProducts);
+export const OrdersContext: React.Context<ISelectedProducts> = React.createContext(
+  selectedProducts
+);
 
 const Order = () => {
   let [isOpen, setIsOpen] = useState(false);
@@ -48,17 +50,18 @@ const Order = () => {
           </tbody>
         </table>
       </div>
-      <table cellSpacing="0" cellPadding="0" className={Styles.itemTable}>
-        <tbody>
-          {Object.keys(ordersContext.selectedProducts).map((item, index) => {
-            const props = {
-              id: index
-            };
-            return <Item key={index} {...props} />;
-          })}
-        </tbody>
-      </table>
       <OrdersContext.Provider value={{ ...state, dispatch: dispatch }}>
+        <table cellSpacing="0" cellPadding="0" className={Styles.itemTable}>
+          <tbody>
+            {Object.keys(ordersContext.selectedProducts).map((item, index) => {
+              const props = {
+                id: index
+              };
+
+              return <Item key={index} {...props} />;
+            })}
+          </tbody>
+        </table>
         {isOpen ? <ProductTable {...props} /> : <></>}
       </OrdersContext.Provider>
     </div>

@@ -10,11 +10,20 @@
     border: 1px solid #dddddd;
     border-radius: 10px;
     p{
+        font-weight: 500;
         margin: auto;
         padding: 10px 30px;
         width: 100px;
         &:hover{
             background-color: #f7f7f7;
         }
+    }
+    p:nth-child(1){
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+    p:nth-child(2){
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
     }
 }

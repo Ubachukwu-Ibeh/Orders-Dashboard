@@ -5,6 +5,7 @@ import { OrdersContext } from "../Orders/Orders";
 import Product from "../Product/Product";
 import resolveData from "./resolveData";
 import Options from "../Options/Options";
+import { getRandom } from "../../../../utils/productGenerator";
 
 const Item = (props: IItemProps) => {
   const { id } = props;
@@ -12,7 +13,6 @@ const Item = (props: IItemProps) => {
   const [optionsIsOpen, setOptionsIsOpen] = useState(false);
   const ordersContext = useContext(OrdersContext);
   const itemObject = ordersContext.selectedProducts[`item${id}`];
-  const { rating } = itemData;
   const [childerAreOpen, setChildrenAreOpen] = useState(false);
 
   const openChildren = () => {
@@ -26,7 +26,7 @@ const Item = (props: IItemProps) => {
   };
   useEffect(() => {
     setItemData({ ...resolveData(itemObject) });
-  }, []);
+  }, [itemObject]);
 
   return (
     <>
@@ -41,13 +41,19 @@ const Item = (props: IItemProps) => {
         </td>
         <td>{itemData.order_id}</td>
         <td>{itemData.time} min ago</td>
-        <td>{rating && `${rating[0]}.${rating[1]}`}</td>
+        <td className={Styles.customer}>
+          {itemData.name}
+          <span className={Styles.rating}> ★ </span>
+          <span>{itemData.rating}</span>
+        </td>
         <td>${itemData.total}</td>
-        <td>{itemData.profit}</td>
+        <td className={Styles.profit}>
+          {itemData.profit} <span>{itemData.profitPercentage}%</span>
+        </td>
         <td>
           <div className={Styles.status}>
             <p>
-              unknown <span></span>
+              Pending <span>▼</span>
             </p>
           </div>
         </td>
@@ -64,7 +70,7 @@ const Item = (props: IItemProps) => {
         <>
           <tr>
             <td></td>
-            <td colSpan={6}>
+            <td colSpan={7}>
               <table
                 cellPadding="0"
                 cellSpacing="0"
