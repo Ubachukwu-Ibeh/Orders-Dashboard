@@ -18,7 +18,7 @@ const generateProduct = (): IProductData => {
   const discount = getRandom(20, 70);
 
   const from = getRandom(0, randomString.length - 10);
-  const name = randomString.slice(from, from + getRandom(10, 50));
+  const name = randomString.slice(from, from + getRandom(10, 30));
 
   return {
     color: color,

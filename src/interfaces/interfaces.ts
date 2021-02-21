@@ -22,7 +22,7 @@ export interface IOrderAction {
 interface ISelected {
   [name: string]: IItem;
 }
-interface IItem {
+export interface IItem {
   [name: string]: IProductData;
 }
 export interface ISelectedProducts {
@@ -39,11 +39,12 @@ export interface IItemProps {
 export interface IItemDisplay {
   order_id?: number;
   time?: number;
-  rating?: Array<number>;
+  rating?: string;
   total?: number;
   profit?: string;
   name?: string;
   shipping?: number;
   discount?: number;
   grandTotal?: string;
+  profitPercentage?: number;
 }
