@@ -36,9 +36,10 @@ const ProductTable = (props: IProductTableProps) => {
 
   return (
     <div
+      onClick={() => finishOrder()}
       className={Styles.black}
       style={{ display: products[0] ? "flex" : "none" }}>
-      <div className={Styles.main}>
+      <div className={Styles.main} onClick={e => e.stopPropagation()}>
         <table cellSpacing="0" cellPadding="0">
           <tbody>
             <tr>

@@ -1,6 +1,6 @@
 .black{
-    width: 100vw;
-    height: 100vh;
+    width: inherit;
+    height: inherit;
     background-color: rgba(0, 0, 0, 0.2);
     display: flex;
     position: fixed;
@@ -15,6 +15,9 @@
     border-radius: 10px;
     box-shadow: 0px 3px 8px hsla(0, 0%, 0%, 0.2);
     tr{
+        td, th{
+            border-bottom: 1px solid #dddddd;
+          }
         th{
             width: 10%;
         }
@@ -22,6 +25,9 @@
             width: 30%;
         }
     }
+    tr:first-child {
+        height: 50px;
+      }
     tr:not(:first-child){
         &:hover{
             cursor: pointer;
