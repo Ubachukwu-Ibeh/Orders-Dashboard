@@ -16,3 +16,18 @@
 .selected_from_order{
   border: 1px 1px 1px solid #eeeeee;
 }
+.quantity{
+  display: flex;
+  p{
+    margin: auto;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  div{
+    margin-left: 10px;
+    p{
+      font-size: 9pt;
+      color: #aaaaaa;
+    }
+  }
+}

@@ -21,12 +21,12 @@ const Item = (props: IItemProps) => {
       order_id: getRandom(1000, 30000),
       time: getRandom(0, 10),
       rating: [getRandom(1, 5), getRandom(0, 10)],
+
       total: `$${Object.keys(itemObject).reduce((prev, product) => {
-        const priceText = itemObject[product].price;
-        return (Number(priceText.slice(-(priceText.length - 1))) + Number(prev))
-          .toFixed(2)
-          .toString();
-      }, "0")}`,
+        const price = itemObject[product].total;
+        return Number((price + prev).toFixed(2));
+      }, 0)}`,
+
       profit: `$${getRandom(50, 500)}`
     };
     setItemData({ ...data });
@@ -60,33 +60,56 @@ const Item = (props: IItemProps) => {
         </td>
       </tr>
       {childerAreOpen ? (
-        <tr>
-          <td></td>
-          <td colSpan={6}>
-            <table
-              cellPadding="0"
-              cellSpacing="0"
-              className={Styles.productsTable}>
-              <tbody>
-                <tr className={Styles.productsHeader}>
-                  <th>#</th>
-                  <th>SKU</th>
-                  <th>Name</th>
+        <>
+          <tr>
+            <td></td>
+            <td colSpan={6}>
+              <table
+                cellPadding="0"
+                cellSpacing="0"
+                className={Styles.productsTable}>
+                <tbody>
+                  <tr className={Styles.productsHeader}>
+                    <th>#</th>
+                    <th>SKU</th>
+                    <th>Name</th>
 
-                  <th>Price</th>
-                  <th>Qty</th>
-                  <th>Disc</th>
-                  <th>Total</th>
-                </tr>
-                {Object.keys(itemObject).map((product, index) => {
-                  return (
-                    <Product key={`prod${index}`} {...itemObject[product]} />
-                  );
-                })}
-              </tbody>
-            </table>
-          </td>
-        </tr>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Disc</th>
+                    <th>Total</th>
+                  </tr>
+                  {Object.keys(itemObject).map((product, index) => {
+                    const prop = itemObject[product];
+                    prop.hasBeenSelected = true;
+                    return <Product key={`prod${index}`} {...prop} />;
+                  })}
+                  <tr className={Styles.orderSummary}></tr>
+                  <tr className={Styles.orderSummary}>
+                    <td colSpan={3}></td>
+                    <td colSpan={3}>Subtotal</td>
+                    <td colSpan={2}>$100</td>
+                  </tr>
+                  <tr className={Styles.orderSummary}>
+                    <td colSpan={3}></td>
+                    <td colSpan={3}>Shipping</td>
+                    <td colSpan={2}>$100</td>
+                  </tr>
+                  <tr className={Styles.orderSummary}>
+                    <td colSpan={3}></td>
+                    <td colSpan={3}>Discount</td>
+                    <td colSpan={2}>$100</td>
+                  </tr>
+                  <tr className={Styles.orderSummary}>
+                    <td colSpan={3}></td>
+                    <td colSpan={3}>Total</td>
+                    <td colSpan={2}>$100</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </>
       ) : (
         <></>
       )}

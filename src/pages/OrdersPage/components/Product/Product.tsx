@@ -7,9 +7,38 @@ import * as ordersActions from "../../../../actions/Orders_actions";
 const Product: React.FC<IProductData> = props => {
   let [selected, setSelected] = useState(false);
   const ordersContext = useContext(OrdersContext);
-  const { color, product_id, name, price, discount, id } = props;
+  const [productData, setProductData] = useState({ ...props });
+  const [arrowsVisible, setArrowsVisible] = useState(false);
+  const {
+    color,
+    product_id,
+    name,
+    price,
+    discount,
+    id,
+    hasBeenSelected,
+    quantity,
+    total
+  } = productData;
+
+  const setQuantity = (action: string) => {
+    const { quantity } = productData;
+    if (action === "increase") {
+      if (quantity === 10) return;
+      productData.quantity += 1;
+    } else if (action === "decrease") {
+      if (quantity === 1) return;
+      productData.quantity -= 1;
+    }
+    const totalPrice = productData.quantity * productData.price;
+    productData.total = Number(
+      (totalPrice - (productData.discount / 100) * totalPrice).toFixed(2)
+    );
+    setProductData({ ...productData });
+  };
 
   const handleSelect = () => {
+    if (hasBeenSelected) return;
     selected = !selected;
     setSelected(selected);
 
@@ -18,7 +47,7 @@ const Product: React.FC<IProductData> = props => {
         type: ordersActions.PRE_ADD_PRODUCT,
         payload: {
           id: id,
-          productData: { ...props }
+          productData: { ...productData }
         }
       });
     } else {
@@ -31,10 +60,29 @@ const Product: React.FC<IProductData> = props => {
     }
   };
 
+  const revealArrows = () => {
+    if (hasBeenSelected) return;
+    setArrowsVisible(true);
+  };
+  const hideArrows = () => {
+    if (hasBeenSelected) return;
+    setArrowsVisible(false);
+  };
+
+  const handleSelectedStatus = () => {
+    if (selected && !hasBeenSelected) {
+      return Styles.selected;
+    } else if (!selected && !hasBeenSelected) {
+      return Styles.default;
+    }
+  };
+
   return (
     <tr
-      className={selected ? Styles.selected : Styles.default}
-      onClick={() => handleSelect()}>
+      className={handleSelectedStatus()}
+      onClick={() => handleSelect()}
+      onMouseOver={() => revealArrows()}
+      onMouseLeave={() => hideArrows()}>
       <td>
         <div
           className={Styles.product_img}
@@ -43,10 +91,22 @@ const Product: React.FC<IProductData> = props => {
       <td>{product_id}</td>
       <td>{name}</td>
 
-      <td>{price}</td>
-      <td>1x</td>
-      <td>{discount}</td>
-      <td>200</td>
+      <td>${price}</td>
+      <td>
+        <div className={Styles.quantity}>
+          <p>{quantity} x</p>
+          {arrowsVisible ? (
+            <div>
+              <p onClick={() => setQuantity("increase")}>▲</p>
+              <p onClick={() => setQuantity("decrease")}>▼</p>
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
+      </td>
+      <td>{discount}%</td>
+      <td>${total}</td>
     </tr>
   );
 };

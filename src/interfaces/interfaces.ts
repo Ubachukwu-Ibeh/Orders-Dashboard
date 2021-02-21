@@ -4,9 +4,12 @@ export interface IProductData {
   color: string;
   product_id: number;
   name: string;
-  price: string;
-  discount: string;
+  price: number;
+  discount: number;
   id: number;
+  hasBeenSelected: boolean;
+  quantity: number;
+  total: number;
 }
 interface IOrderActionPayload {
   id: number;

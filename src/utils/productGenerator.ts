@@ -13,9 +13,9 @@ const generateProduct = (): IProductData => {
 
   const product_id = getRandom(1, 30000);
 
-  const price = `$${getRandom(1, 200)}.${getRandom(0, 9)}${getRandom(0, 9)}`;
+  const price = Number(getRandom(1, 1000).toFixed(2));
 
-  const discount = `${getRandom(20, 70)}%`;
+  const discount = getRandom(20, 70);
 
   const from = getRandom(0, randomString.length - 10);
   const name = randomString.slice(from, from + getRandom(10, 50));
@@ -26,7 +26,10 @@ const generateProduct = (): IProductData => {
     name: name,
     price: price,
     discount: discount,
-    id: 0
+    id: 0,
+    hasBeenSelected: false,
+    quantity: 1,
+    total: Number((price - (discount / 100) * price).toFixed(2))
   };
 };
 export default generateProduct;
