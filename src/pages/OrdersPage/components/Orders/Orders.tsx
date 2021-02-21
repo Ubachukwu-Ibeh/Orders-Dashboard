@@ -21,20 +21,35 @@ const Order = () => {
   };
   return (
     <div className={Styles.main}>
-      <div>
-        <button onClick={() => openOrdersList()}>+ New order</button>
+      <div className={Styles.pageHeaderCont}>
+        <div className={Styles.pageHeader}>
+          <div>
+            <h1>Orders</h1>
+            <p>Status: All</p>
+            <p>Time: Ascending</p>
+            <input type="search" name="" id="" />
+          </div>
+          <p className={Styles.newOrder} onClick={() => openOrdersList()}>
+            + New order
+          </p>
+        </div>
+        <table cellSpacing="0" cellPadding="0" className={Styles.tableHeader}>
+          <tbody>
+            <tr>
+              <th>#</th>
+              <th>Order id</th>
+              <th>Created</th>
+              <th>Customer</th>
+              <th>Total</th>
+              <th>Profit</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <table cellSpacing="0" cellPadding="0" className={Styles.itemTable}>
         <tbody>
-          <tr>
-            <th>#</th>
-            <th>Order id</th>
-            <th>Created</th>
-            <th>Customer</th>
-            <th>Total</th>
-            <th>Profit</th>
-            <th>Status</th>
-          </tr>
           {Object.keys(ordersContext.selectedProducts).map((item, index) => {
             const props = {
               id: index
