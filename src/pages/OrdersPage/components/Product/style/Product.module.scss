@@ -1,7 +1,33 @@
 .product_img {
-  width: 50px;
-  height: 50px;
+  margin: 10px;
+  margin-left: 0px;
+  width: 2vw;
+  height: 2vw;
+  border-radius: 10px;
 }
 .selected{
-  background-color: #eee;
+  background-color: #f7f7f7;
+}
+.default{
+  &:hover{
+    background-color: #f0f0f0;
+  }
+}
+.selected_from_order{
+  border: 1px 1px 1px solid #eeeeee;
+}
+.quantity{
+  display: flex;
+  p{
+    margin: auto;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  div{
+    margin-left: 10px;
+    p{
+      font-size: 9pt;
+      color: #aaaaaa;
+    }
+  }
 }
