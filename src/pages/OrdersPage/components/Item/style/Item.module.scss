@@ -54,6 +54,9 @@
 
 .productsHeader {
     height: 50px;
+    th:nth-child(3){
+        width: 40%;
+    }
 }
 .orderSummary{
     height: 30px;

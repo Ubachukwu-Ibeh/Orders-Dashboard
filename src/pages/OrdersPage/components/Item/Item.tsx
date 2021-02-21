@@ -10,24 +10,44 @@ const Item = (props: IItemProps) => {
   const [itemData, setItemData] = useState<IItemDisplay>({});
   const ordersContext = useContext(OrdersContext);
   const itemObject = ordersContext.selectedProducts[`item${id}`];
-  const { order_id, time, rating, total, profit } = itemData;
+  const {
+    order_id,
+    time,
+    rating,
+    total,
+    profit,
+    shipping,
+    discount,
+    grandTotal
+  } = itemData;
   const [childerAreOpen, setChildrenAreOpen] = useState(false);
 
   const openChildren = () => {
     setChildrenAreOpen(!childerAreOpen);
   };
   useEffect(() => {
+    const totalPrice = Object.keys(itemObject).reduce((prev, product) => {
+      const price = itemObject[product].total;
+      return Number((price + prev).toFixed(2));
+    }, 0);
+    const totalDiscount = Object.keys(itemObject).reduce((prev, product) => {
+      const discount = itemObject[product].discount;
+      return Number(
+        ((discount / 100) * itemObject[product].price + prev).toFixed(2)
+      );
+    }, 0);
+    const shipping = getRandom(10, 50);
     const data = {
       order_id: getRandom(1000, 30000),
       time: getRandom(0, 10),
       rating: [getRandom(1, 5), getRandom(0, 10)],
 
-      total: `$${Object.keys(itemObject).reduce((prev, product) => {
-        const price = itemObject[product].total;
-        return Number((price + prev).toFixed(2));
-      }, 0)}`,
+      total: totalPrice,
 
-      profit: `$${getRandom(50, 500)}`
+      profit: `$${getRandom(50, 500)}`,
+      shipping: shipping,
+      discount: totalDiscount,
+      grandTotal: (totalPrice + shipping - totalDiscount).toFixed(2)
     };
     setItemData({ ...data });
   }, []);
@@ -46,7 +66,7 @@ const Item = (props: IItemProps) => {
         <td>{order_id}</td>
         <td>{time} min ago</td>
         <td>{rating && `${rating[0]}.${rating[1]}`}</td>
-        <td>{total}</td>
+        <td>${total}</td>
         <td>{profit}</td>
         <td>
           <div className={Styles.status}>
@@ -88,22 +108,22 @@ const Item = (props: IItemProps) => {
                   <tr className={Styles.orderSummary}>
                     <td colSpan={3}></td>
                     <td colSpan={3}>Subtotal</td>
-                    <td colSpan={2}>$100</td>
+                    <td colSpan={2}>${total}</td>
                   </tr>
                   <tr className={Styles.orderSummary}>
                     <td colSpan={3}></td>
                     <td colSpan={3}>Shipping</td>
-                    <td colSpan={2}>$100</td>
+                    <td colSpan={2}>${shipping}</td>
                   </tr>
                   <tr className={Styles.orderSummary}>
                     <td colSpan={3}></td>
                     <td colSpan={3}>Discount</td>
-                    <td colSpan={2}>$100</td>
+                    <td colSpan={2}>${discount}</td>
                   </tr>
                   <tr className={Styles.orderSummary}>
                     <td colSpan={3}></td>
                     <td colSpan={3}>Total</td>
-                    <td colSpan={2}>$100</td>
+                    <td colSpan={2}>${grandTotal}</td>
                   </tr>
                 </tbody>
               </table>

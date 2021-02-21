@@ -21,7 +21,8 @@ const Product: React.FC<IProductData> = props => {
     total
   } = productData;
 
-  const setQuantity = (action: string) => {
+  const setQuantity = (e: React.MouseEvent, action: string) => {
+    e.stopPropagation();
     const { quantity } = productData;
     if (action === "increase") {
       if (quantity === 10) return;
@@ -30,10 +31,7 @@ const Product: React.FC<IProductData> = props => {
       if (quantity === 1) return;
       productData.quantity -= 1;
     }
-    const totalPrice = productData.quantity * productData.price;
-    productData.total = Number(
-      (totalPrice - (productData.discount / 100) * totalPrice).toFixed(2)
-    );
+    productData.total = productData.quantity * productData.price;
     setProductData({ ...productData });
   };
 
@@ -97,8 +95,8 @@ const Product: React.FC<IProductData> = props => {
           <p>{quantity} x</p>
           {arrowsVisible ? (
             <div>
-              <p onClick={() => setQuantity("increase")}>▲</p>
-              <p onClick={() => setQuantity("decrease")}>▼</p>
+              <p onClick={e => setQuantity(e, "increase")}>▲</p>
+              <p onClick={e => setQuantity(e, "decrease")}>▼</p>
             </div>
           ) : (
             <></>

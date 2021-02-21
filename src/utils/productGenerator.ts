@@ -29,7 +29,7 @@ const generateProduct = (): IProductData => {
     id: 0,
     hasBeenSelected: false,
     quantity: 1,
-    total: Number((price - (discount / 100) * price).toFixed(2))
+    total: price
   };
 };
 export default generateProduct;
