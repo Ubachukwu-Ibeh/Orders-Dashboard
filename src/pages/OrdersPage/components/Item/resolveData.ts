@@ -1,4 +1,3 @@
-import { IItem } from "../../../../interfaces/interfaces";
 import { getRandom } from "../../../../utils/productGenerator";
 import { getStorage } from "../../../../utils/localStorage";
 const resolveData = (id: number) => {

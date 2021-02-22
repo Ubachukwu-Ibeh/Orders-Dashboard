@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useContext } from "react";
+import React, { useState, useReducer } from "react";
 import Styles from "./style/Orders.module.scss";
 import { selectedProducts } from "../../../../stores/SelectedProducts_store";
 import ProductTable from "../ProductTable/ProductTable";
@@ -14,7 +14,6 @@ export const OrdersContext: React.Context<ISelectedProducts> = React.createConte
 const Order = () => {
   let [isOpen, setIsOpen] = useState(false);
   let [state, dispatch] = useReducer(orderReducer, selectedProducts);
-  const ordersContext = useContext(OrdersContext);
   const storage = getStorage();
   const props = {
     setIsOpen: setIsOpen

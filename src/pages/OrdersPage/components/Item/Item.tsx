@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import Styles from "./style/Item.module.scss";
 import { IItemProps, IItemDisplay } from "../../../../interfaces/interfaces";
-import { OrdersContext } from "../Orders/Orders";
 import Product from "../Product/Product";
 import resolveData from "./resolveData";
 import Options from "../Options/Options";
@@ -11,8 +10,6 @@ const Item = (props: IItemProps) => {
   const { id } = props;
   const [itemData, setItemData] = useState<IItemDisplay>({});
   const [optionsIsOpen, setOptionsIsOpen] = useState(false);
-  const ordersContext = useContext(OrdersContext);
-  const itemObject = ordersContext.selectedProducts[`item${id}`];
   const storage = getStorage().selectedProducts[`item${id}`];
   const [childerAreOpen, setChildrenAreOpen] = useState(false);
 
@@ -27,7 +24,7 @@ const Item = (props: IItemProps) => {
   };
   useEffect(() => {
     setItemData({ ...resolveData(id) });
-  }, [itemObject]);
+  }, [id]);
 
   return (
     <>
