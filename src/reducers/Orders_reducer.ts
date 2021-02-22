@@ -1,5 +1,5 @@
 import { ISelectedProducts, IOrderAction } from "../interfaces/interfaces";
-import { setItem } from "../utils/localStorage";
+import { setStorage } from "../utils/localStorage";
 
 const orderReducer = (state: ISelectedProducts, action: IOrderAction) => {
   switch (action.type) {
@@ -10,7 +10,7 @@ const orderReducer = (state: ISelectedProducts, action: IOrderAction) => {
         state.selectedProducts[key][`product${index}`] = product;
       });
       state.preSelect = [];
-      setItem(state);
+      setStorage(state);
       return { ...state };
     case "REMOVE_PRODUCT":
       const product = Object.keys(state.selectedProducts).find(
@@ -19,13 +19,12 @@ const orderReducer = (state: ISelectedProducts, action: IOrderAction) => {
       if (product) {
         delete state.selectedProducts[product];
       }
-      setItem(state);
+      setStorage(state);
       return { ...state };
     case "PRE_ADD_PRODUCT":
       if (action.payload.productData) {
         state.preSelect.push(action.payload.productData);
       }
-      setItem(state);
       return { ...state };
     case "PRE_REMOVE_PRODUCT":
       const productToDelete = state.preSelect.find(
@@ -33,7 +32,6 @@ const orderReducer = (state: ISelectedProducts, action: IOrderAction) => {
       );
       productToDelete &&
         state.preSelect.splice(state.preSelect.indexOf(productToDelete), 1);
-      setItem(state);
       return { ...state };
     case "PRE_REPLACE_PRODUCT":
       const newData = action.payload.productData;

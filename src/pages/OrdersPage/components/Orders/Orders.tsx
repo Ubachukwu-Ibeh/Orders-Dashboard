@@ -5,7 +5,7 @@ import ProductTable from "../ProductTable/ProductTable";
 import orderReducer from "../../../../reducers/Orders_reducer";
 import Item from "../Item/Item";
 import { ISelectedProducts } from "../../../../interfaces/interfaces";
-// import { getItem } from "../../../../utils/localStorage";
+import { getStorage } from "../../../../utils/localStorage";
 
 export const OrdersContext: React.Context<ISelectedProducts> = React.createContext(
   selectedProducts
@@ -15,6 +15,7 @@ const Order = () => {
   let [isOpen, setIsOpen] = useState(false);
   let [state, dispatch] = useReducer(orderReducer, selectedProducts);
   const ordersContext = useContext(OrdersContext);
+  const storage = getStorage();
   const props = {
     setIsOpen: setIsOpen
   };
@@ -53,13 +54,15 @@ const Order = () => {
       <OrdersContext.Provider value={{ ...state, dispatch: dispatch }}>
         <table cellSpacing="0" cellPadding="0" className={Styles.itemTable}>
           <tbody>
-            {Object.keys(ordersContext.selectedProducts).map((item, index) => {
-              const props = {
-                id: index
-              };
+            {Object.keys(storage ? storage.selectedProducts : []).map(
+              (item, index) => {
+                const props = {
+                  id: index
+                };
 
-              return <Item key={index} {...props} />;
-            })}
+                return <Item key={index} {...props} />;
+              }
+            )}
           </tbody>
         </table>
         {isOpen ? <ProductTable {...props} /> : <></>}
