@@ -1,6 +1,8 @@
 import { IItem } from "../../../../interfaces/interfaces";
 import { getRandom } from "../../../../utils/productGenerator";
-const resolveData = (itemObject: IItem) => {
+import { getStorage } from "../../../../utils/localStorage";
+const resolveData = (id: number) => {
+  const itemObject = getStorage().selectedProducts[`item${id}`];
   const totalPrice = Object.keys(itemObject).reduce((prev, product) => {
     const price = itemObject[product].total;
     return Number((price + prev).toFixed(2));

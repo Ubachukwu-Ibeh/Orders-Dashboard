@@ -5,7 +5,7 @@ import { OrdersContext } from "../Orders/Orders";
 import Product from "../Product/Product";
 import resolveData from "./resolveData";
 import Options from "../Options/Options";
-import { getRandom } from "../../../../utils/productGenerator";
+import { getStorage } from "../../../../utils/localStorage";
 
 const Item = (props: IItemProps) => {
   const { id } = props;
@@ -13,6 +13,7 @@ const Item = (props: IItemProps) => {
   const [optionsIsOpen, setOptionsIsOpen] = useState(false);
   const ordersContext = useContext(OrdersContext);
   const itemObject = ordersContext.selectedProducts[`item${id}`];
+  const storage = getStorage().selectedProducts[`item${id}`];
   const [childerAreOpen, setChildrenAreOpen] = useState(false);
 
   const openChildren = () => {
@@ -25,7 +26,7 @@ const Item = (props: IItemProps) => {
     setOptionsIsOpen(false);
   };
   useEffect(() => {
-    setItemData({ ...resolveData(itemObject) });
+    setItemData({ ...resolveData(id) });
   }, [itemObject]);
 
   return (
@@ -86,8 +87,8 @@ const Item = (props: IItemProps) => {
                     <th>Disc</th>
                     <th>Total</th>
                   </tr>
-                  {Object.keys(itemObject).map((product, index) => {
-                    const prop = itemObject[product];
+                  {Object.keys(storage).map((product, index) => {
+                    const prop = storage[product];
                     prop.hasBeenSelected = true;
                     return <Product key={`prod${index}`} {...prop} />;
                   })}
