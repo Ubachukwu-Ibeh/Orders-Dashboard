@@ -16,11 +16,13 @@ const Order = () => {
   let [state, dispatch] = useReducer(orderReducer, selectedProducts);
   const storage = getStorage();
   const props = {
-    setIsOpen: setIsOpen
+    setIsOpen
   };
+
   const openOrdersList = () => {
     setIsOpen(!isOpen);
   };
+
   return (
     <div className={Styles.main}>
       <div className={Styles.pageHeaderCont}>
@@ -50,21 +52,20 @@ const Order = () => {
           </tbody>
         </table>
       </div>
-      <OrdersContext.Provider value={{ ...state, dispatch: dispatch }}>
+      <OrdersContext.Provider value={{ ...state, dispatch }}>
         <table cellSpacing="0" cellPadding="0" className={Styles.itemTable}>
           <tbody>
             {Object.keys(storage ? storage.selectedProducts : []).map(
               (item, index) => {
                 const props = {
-                  id: index
+                  id: Number(item.slice(3))
                 };
-
                 return <Item key={index} {...props} />;
               }
             )}
           </tbody>
         </table>
-        {isOpen ? <ProductTable {...props} /> : <></>}
+        {isOpen && <ProductTable {...props} />}
       </OrdersContext.Provider>
     </div>
   );

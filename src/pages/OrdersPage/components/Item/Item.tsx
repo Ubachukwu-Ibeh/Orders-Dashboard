@@ -12,15 +12,13 @@ const Item = (props: IItemProps) => {
   const [optionsIsOpen, setOptionsIsOpen] = useState(false);
   const storage = getStorage().selectedProducts[`item${id}`];
   const [childerAreOpen, setChildrenAreOpen] = useState(false);
+  console.log(getStorage());
 
   const openChildren = () => {
     setChildrenAreOpen(!childerAreOpen);
   };
-  const showOptions = () => {
-    setOptionsIsOpen(true);
-  };
-  const hideOptions = () => {
-    setOptionsIsOpen(false);
+  const showOptions = (value: boolean) => {
+    setOptionsIsOpen(value);
   };
   useEffect(() => {
     setItemData({ ...resolveData(id) });
@@ -56,15 +54,15 @@ const Item = (props: IItemProps) => {
           </div>
         </td>
         <td
-          onMouseEnter={() => showOptions()}
-          onMouseLeave={() => hideOptions()}>
+          onMouseEnter={() => showOptions(true)}
+          onMouseLeave={() => showOptions(false)}>
           <div className={Styles.options}>
             <button onClick={e => e.stopPropagation()}>...</button>
-            {optionsIsOpen ? <Options {...props} /> : <></>}
+            {optionsIsOpen && <Options {...props} />}
           </div>
         </td>
       </tr>
-      {childerAreOpen ? (
+      {childerAreOpen && (
         <>
           <tr>
             <td></td>
@@ -115,8 +113,6 @@ const Item = (props: IItemProps) => {
             </td>
           </tr>
         </>
-      ) : (
-        <></>
       )}
     </>
   );

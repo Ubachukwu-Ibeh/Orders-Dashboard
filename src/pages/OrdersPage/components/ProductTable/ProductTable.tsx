@@ -7,7 +7,7 @@ import {
   IProductData,
   IProductTableProps
 } from "../../../../interfaces/interfaces";
-import * as orderActions from "../../../../actions/Orders_actions";
+import * as orderActionTypes from "../../../../actions/Orders_actions";
 
 const ProductTable = (props: IProductTableProps) => {
   const { setIsOpen } = props;
@@ -27,7 +27,7 @@ const ProductTable = (props: IProductTableProps) => {
 
     if (ordersContext.preSelect.length === 0) return;
     ordersContext.dispatch({
-      type: orderActions.ADD_PRODUCT,
+      type: orderActionTypes.ADD_PRODUCT,
       payload: {
         id: Object.keys(ordersContext.selectedProducts).length
       }

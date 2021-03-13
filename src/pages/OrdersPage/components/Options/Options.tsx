@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
-import * as actions from "../../../../actions/Orders_actions";
+import * as orderActionTypes from "../../../../actions/Orders_actions";
 import Styles from "./style/Options.module.scss";
 import { IItemProps } from "../../../../interfaces/interfaces";
 import { OrdersContext } from "../Orders/Orders";
 
-const Options: React.FC<IItemProps> = ({ id }) => {
+const Options = ({ id }: IItemProps) => {
   const ordersContext = useContext(OrdersContext);
   const deleteItem = () => {
     ordersContext.dispatch({
-      type: actions.REMOVE_PRODUCT,
+      type: orderActionTypes.REMOVE_PRODUCT,
       payload: {
-        id: id
+        id
       }
     });
   };
