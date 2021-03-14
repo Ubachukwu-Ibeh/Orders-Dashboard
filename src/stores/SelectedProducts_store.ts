@@ -1,7 +1,11 @@
 import { ISelectedProducts } from "../interfaces/interfaces";
+import { getStorage } from "../utils/localStorage";
+const storage = getStorage();
 
-export const selectedProducts: ISelectedProducts = {
+const selectedProducts: ISelectedProducts = {
   preSelect: [],
   selectedProducts: {},
-  dispatch: () => {}
+  dispatch: () => {},
+  ...storage
 };
+export default selectedProducts;

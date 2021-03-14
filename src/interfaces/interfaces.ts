@@ -24,12 +24,12 @@ export interface IOrderAction {
   payload: IOrderActionPayload;
 }
 
-interface ISelected {
-  [name: string]: IItem;
-}
-
 export interface IItem {
   [name: string]: IProductData;
+}
+
+interface ISelected {
+  [name: string]: IItem;
 }
 
 export interface ISelectedProducts {

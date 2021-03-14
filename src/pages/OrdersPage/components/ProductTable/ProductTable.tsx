@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import generateProduct from "../../../../utils/productGenerator";
+import { getStorage } from "../../../../utils/localStorage";
 import Styles from "./style/ProductTable.module.scss";
 import Product from "../Product/Product";
 import { OrdersContext } from "../Orders/Orders";
@@ -13,7 +14,7 @@ const ProductTable = (props: IProductTableProps) => {
   const { setIsOpen } = props;
   const ordersContext = useContext(OrdersContext);
   let [products, setProducts] = useState<Array<IProductData>>([]);
-
+  console.log(getStorage());
   useEffect(() => {
     const generatedProducts: Array<IProductData> = [];
     for (let i = 0; i < 10; i++) {
@@ -28,9 +29,9 @@ const ProductTable = (props: IProductTableProps) => {
     if (ordersContext.preSelect.length === 0) return;
 
     const getId = () => {
-      const selectedProducts = Object.keys(
-        ordersContext.selectedProducts
-      ).slice(-1)[0];
+      const storage = getStorage();
+      const selectedProducts =
+        storage && Object.keys(storage.selectedProducts).slice(-1)[0];
       if (selectedProducts) {
         return Number(selectedProducts.slice(4)) + 1;
       } else {

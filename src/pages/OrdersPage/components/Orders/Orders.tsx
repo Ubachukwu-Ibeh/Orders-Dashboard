@@ -1,6 +1,6 @@
 import React, { useState, useReducer } from "react";
 import Styles from "./style/Orders.module.scss";
-import { selectedProducts } from "../../../../stores/SelectedProducts_store";
+import selectedProducts from "../../../../stores/SelectedProducts_store";
 import ProductTable from "../ProductTable/ProductTable";
 import orderReducer from "../../../../reducers/Orders_reducer";
 import Item from "../Item/Item";

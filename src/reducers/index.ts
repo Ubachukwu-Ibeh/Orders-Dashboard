@@ -1,6 +1,8 @@
 import orderReducer from "./Orders_reducer";
 import { combineReducers } from "redux";
 
-combineReducers({
+const indexReducer = combineReducers({
   orderReducer
 });
+
+export default indexReducer;
