@@ -5,7 +5,6 @@ const storage = getStorage();
 const selectedProducts: ISelectedProducts = {
   preSelect: [],
   selectedProducts: {},
-  dispatch: () => {},
   ...storage
 };
 export default selectedProducts;

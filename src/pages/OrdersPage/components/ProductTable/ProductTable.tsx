@@ -1,19 +1,26 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import generateProduct from "../../../../utils/productGenerator";
 import { getStorage } from "../../../../utils/localStorage";
 import Styles from "./style/ProductTable.module.scss";
 import Product from "../Product/Product";
-import { OrdersContext } from "../Orders/Orders";
 import {
   IProductData,
-  IProductTableProps
+  IProductTableProps,
+  ISelectedProducts
 } from "../../../../interfaces/interfaces";
+import { useDispatch, createSelectorHook } from "react-redux";
 import * as orderActionTypes from "../../../../actionTypes/Orders_actionTypes";
+
+type IStore = {
+  orderReducer: ISelectedProducts;
+};
+const useSelector = createSelectorHook<IStore>();
 
 const ProductTable = (props: IProductTableProps) => {
   const { setIsOpen } = props;
-  const ordersContext = useContext(OrdersContext);
   let [products, setProducts] = useState<Array<IProductData>>([]);
+  const store = useSelector(state => state.orderReducer);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const generatedProducts: Array<IProductData> = [];
@@ -21,19 +28,20 @@ const ProductTable = (props: IProductTableProps) => {
       generatedProducts.push(generateProduct());
     }
     setProducts(generatedProducts);
-  }, [ordersContext.selectedProducts]);
+  }, [store.selectedProducts]);
 
   const finishOrder = (val?: boolean) => {
     setIsOpen(prev => !prev);
 
     if (val) {
-      ordersContext.dispatch({
+      dispatch({
         type: orderActionTypes.CLEAR_PRESELECT,
         payload: { id: 0 }
       });
       return;
     }
-    if (ordersContext.preSelect.length === 0) return;
+
+    if (store.preSelect.length === 0) return;
 
     const getId = () => {
       const storage = getStorage();
@@ -46,7 +54,7 @@ const ProductTable = (props: IProductTableProps) => {
       }
     };
 
-    ordersContext.dispatch({
+    dispatch({
       type: orderActionTypes.ADD_PRODUCT,
       payload: {
         id: getId()

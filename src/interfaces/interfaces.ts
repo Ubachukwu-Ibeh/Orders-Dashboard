@@ -35,7 +35,6 @@ interface ISelected {
 export interface ISelectedProducts {
   preSelect: Array<IProductData>;
   selectedProducts: ISelected;
-  dispatch: React.Dispatch<IOrderAction> | Function;
 }
 
 export interface IProductTableProps {

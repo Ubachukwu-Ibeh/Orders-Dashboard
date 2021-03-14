@@ -1,12 +1,13 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { IProductData } from "../../../../interfaces/interfaces";
 import Styles from "./style/Product.module.scss";
-import { OrdersContext } from "../Orders/Orders";
 import * as orderActionTypes from "../../../../actionTypes/Orders_actionTypes";
+import { useDispatch } from "react-redux";
 
 const Product = (props: IProductData) => {
   let [selected, setSelected] = useState(false);
-  const ordersContext = useContext(OrdersContext);
+  const dispatch = useDispatch();
+
   const [productData, setProductData] = useState({ ...props });
   const [arrowsVisible, setArrowsVisible] = useState(false);
   const { id, hasBeenSelected } = productData;
@@ -28,7 +29,7 @@ const Product = (props: IProductData) => {
 
     productData.total = productData.quantity * productData.price;
 
-    ordersContext.dispatch({
+    dispatch({
       type: orderActionTypes.PRE_REPLACE_PRODUCT,
       payload: {
         id,
@@ -45,7 +46,7 @@ const Product = (props: IProductData) => {
     setSelected(selected);
 
     if (selected) {
-      ordersContext.dispatch({
+      dispatch({
         type: orderActionTypes.PRE_ADD_PRODUCT,
         payload: {
           id,
@@ -53,7 +54,7 @@ const Product = (props: IProductData) => {
         }
       });
     } else {
-      ordersContext.dispatch({
+      dispatch({
         type: orderActionTypes.PRE_REMOVE_PRODUCT,
         payload: {
           id

@@ -1,14 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
 import * as orderActionTypes from "../../../../actionTypes/Orders_actionTypes";
 import Styles from "./style/Options.module.scss";
 import { IItemProps } from "../../../../interfaces/interfaces";
-import { OrdersContext } from "../Orders/Orders";
+import { useDispatch } from "react-redux";
 
 const Options = ({ id }: IItemProps) => {
-  const ordersContext = useContext(OrdersContext);
+  const dispatch = useDispatch();
 
   const deleteItem = () => {
-    ordersContext.dispatch({
+    dispatch({
       type: orderActionTypes.REMOVE_PRODUCT,
       payload: {
         id
