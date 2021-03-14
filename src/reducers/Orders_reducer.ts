@@ -1,6 +1,6 @@
 import { ISelectedProducts, IOrderAction } from "../interfaces/interfaces";
 import { setStorage } from "../utils/localStorage";
-import * as actionTypes from "../actions/Orders_actions";
+import * as actionTypes from "../actionTypes/Orders_actionTypes";
 
 const orderReducer = (state: ISelectedProducts, action: IOrderAction) => {
   switch (action.type) {

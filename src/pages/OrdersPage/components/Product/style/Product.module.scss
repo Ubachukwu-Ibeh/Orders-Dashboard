@@ -5,27 +5,34 @@
   height: 2vw;
   border-radius: 10px;
 }
-.selected{
+
+.selected {
   background-color: #f7f7f7;
 }
-.default{
-  &:hover{
+
+.default {
+  &:hover {
     background-color: #ededed;
   }
 }
-.selected_from_order{
+
+.selected_from_order {
   border: 1px 1px 1px solid #eeeeee;
 }
-.quantity{
+
+.quantity {
   display: flex;
-  p{
+
+  p {
     margin: auto;
     margin-left: 0px;
     margin-right: 0px;
   }
-  div{
+
+  div {
     margin-left: 10px;
-    p{
+
+    p {
       font-size: 9pt;
       color: #aaaaaa;
     }

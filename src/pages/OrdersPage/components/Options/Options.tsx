@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import * as orderActionTypes from "../../../../actions/Orders_actions";
+import * as orderActionTypes from "../../../../actionTypes/Orders_actionTypes";
 import Styles from "./style/Options.module.scss";
 import { IItemProps } from "../../../../interfaces/interfaces";
 import { OrdersContext } from "../Orders/Orders";

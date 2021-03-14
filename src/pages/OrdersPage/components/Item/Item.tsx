@@ -6,16 +6,14 @@ import resolveData from "./resolveData";
 import Options from "../Options/Options";
 import { getStorage } from "../../../../utils/localStorage";
 
-const Item = (props: IItemProps) => {
-  const { id } = props;
+const Item = ({ id }: IItemProps) => {
   const [itemData, setItemData] = useState<IItemDisplay>({});
   const [optionsIsOpen, setOptionsIsOpen] = useState(false);
   const storage = getStorage().selectedProducts[`item${id}`];
-  const [childernAreOpen, setChildrenAreOpen] = useState(false);
-  console.log("a");
+  const [childrenAreOpen, setChildrenAreOpen] = useState(false);
 
   const openChildren = () => {
-    setChildrenAreOpen(!childernAreOpen);
+    setChildrenAreOpen(!childrenAreOpen);
   };
   const showOptions = (value: boolean) => {
     setOptionsIsOpen(value);
@@ -58,11 +56,11 @@ const Item = (props: IItemProps) => {
           onMouseLeave={() => showOptions(false)}>
           <div className={Styles.options}>
             <button onClick={e => e.stopPropagation()}>...</button>
-            {optionsIsOpen && <Options {...props} />}
+            {optionsIsOpen && <Options id={id} />}
           </div>
         </td>
       </tr>
-      {childernAreOpen && (
+      {childrenAreOpen && (
         <tr>
           <td></td>
           <td colSpan={7}>

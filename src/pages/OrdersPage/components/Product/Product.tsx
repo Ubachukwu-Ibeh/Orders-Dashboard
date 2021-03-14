@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { IProductData } from "../../../../interfaces/interfaces";
 import Styles from "./style/Product.module.scss";
 import { OrdersContext } from "../Orders/Orders";
-import * as orderActionTypes from "../../../../actions/Orders_actions";
+import * as orderActionTypes from "../../../../actionTypes/Orders_actionTypes";
 
 const Product = (props: IProductData) => {
   let [selected, setSelected] = useState(false);
@@ -32,7 +32,7 @@ const Product = (props: IProductData) => {
       type: orderActionTypes.PRE_REPLACE_PRODUCT,
       payload: {
         id,
-        productData: { ...productData }
+        productData
       }
     });
 
@@ -49,7 +49,7 @@ const Product = (props: IProductData) => {
         type: orderActionTypes.PRE_ADD_PRODUCT,
         payload: {
           id,
-          productData: { ...productData }
+          productData
         }
       });
     } else {
@@ -62,13 +62,9 @@ const Product = (props: IProductData) => {
     }
   };
 
-  const revealArrows = () => {
+  const revealArrows = (value: boolean) => {
     if (hasBeenSelected) return;
-    setArrowsVisible(true);
-  };
-  const hideArrows = () => {
-    if (hasBeenSelected) return;
-    setArrowsVisible(false);
+    setArrowsVisible(value);
   };
 
   const handleSelectedStatus = () => {
@@ -83,8 +79,8 @@ const Product = (props: IProductData) => {
     <tr
       className={handleSelectedStatus()}
       onClick={() => handleSelect()}
-      onMouseEnter={() => revealArrows()}
-      onMouseLeave={() => hideArrows()}>
+      onMouseEnter={() => revealArrows(true)}
+      onMouseLeave={() => revealArrows(false)}>
       <td>
         <div
           className={Styles.product_img}
@@ -97,13 +93,11 @@ const Product = (props: IProductData) => {
       <td>
         <div className={Styles.quantity}>
           <p>{productData.quantity} x</p>
-          {arrowsVisible ? (
+          {arrowsVisible && (
             <div>
               <p onClick={e => setQuantity(e, "increase")}>▲</p>
               <p onClick={e => setQuantity(e, "decrease")}>▼</p>
             </div>
-          ) : (
-            <></>
           )}
         </div>
       </td>

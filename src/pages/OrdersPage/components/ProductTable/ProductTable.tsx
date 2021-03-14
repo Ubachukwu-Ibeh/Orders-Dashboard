@@ -7,7 +7,7 @@ import {
   IProductData,
   IProductTableProps
 } from "../../../../interfaces/interfaces";
-import * as orderActionTypes from "../../../../actions/Orders_actions";
+import * as orderActionTypes from "../../../../actionTypes/Orders_actionTypes";
 
 const ProductTable = (props: IProductTableProps) => {
   const { setIsOpen } = props;
@@ -26,14 +26,25 @@ const ProductTable = (props: IProductTableProps) => {
     setIsOpen(prev => !prev);
 
     if (ordersContext.preSelect.length === 0) return;
+
+    const getId = () => {
+      const selectedProducts = Object.keys(
+        ordersContext.selectedProducts
+      ).slice(-1)[0];
+      if (selectedProducts) {
+        return Number(selectedProducts.slice(4)) + 1;
+      } else {
+        return 0;
+      }
+    };
+
     ordersContext.dispatch({
       type: orderActionTypes.ADD_PRODUCT,
       payload: {
-        id: Object.keys(ordersContext.selectedProducts).length
+        id: getId()
       }
     });
   };
-
   return (
     <div
       onClick={() => finishOrder()}
