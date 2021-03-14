@@ -6,6 +6,7 @@ import { OrdersContext } from "../Orders/Orders";
 
 const Options = ({ id }: IItemProps) => {
   const ordersContext = useContext(OrdersContext);
+
   const deleteItem = () => {
     ordersContext.dispatch({
       type: orderActionTypes.REMOVE_PRODUCT,
@@ -14,6 +15,7 @@ const Options = ({ id }: IItemProps) => {
       }
     });
   };
+
   return (
     <div className={Styles.main}>
       <p>Share</p>

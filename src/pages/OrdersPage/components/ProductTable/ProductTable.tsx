@@ -14,7 +14,7 @@ const ProductTable = (props: IProductTableProps) => {
   const { setIsOpen } = props;
   const ordersContext = useContext(OrdersContext);
   let [products, setProducts] = useState<Array<IProductData>>([]);
-  console.log(getStorage());
+
   useEffect(() => {
     const generatedProducts: Array<IProductData> = [];
     for (let i = 0; i < 10; i++) {
@@ -23,9 +23,16 @@ const ProductTable = (props: IProductTableProps) => {
     setProducts(generatedProducts);
   }, [ordersContext.selectedProducts]);
 
-  const finishOrder = () => {
+  const finishOrder = (val?: boolean) => {
     setIsOpen(prev => !prev);
 
+    if (val) {
+      ordersContext.dispatch({
+        type: orderActionTypes.CLEAR_PRESELECT,
+        payload: { id: 0 }
+      });
+      return;
+    }
     if (ordersContext.preSelect.length === 0) return;
 
     const getId = () => {
@@ -46,9 +53,10 @@ const ProductTable = (props: IProductTableProps) => {
       }
     });
   };
+
   return (
     <div
-      onClick={() => finishOrder()}
+      onClick={() => finishOrder(true)}
       className={Styles.black}
       style={{ display: products[0] ? "flex" : "none" }}>
       <div className={Styles.main} onClick={e => e.stopPropagation()}>
