@@ -20,7 +20,6 @@ const resolveData = (id: number) => {
   const shipping = getRandom(10, 50);
 
   return {
-    ...itemObject,
     name: itemObject[Object.keys(itemObject)[0]].name,
     order_id: getRandom(1000, 30000),
     time: getRandom(0, 10),

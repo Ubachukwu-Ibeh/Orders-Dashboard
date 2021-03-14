@@ -11,11 +11,11 @@ const Item = (props: IItemProps) => {
   const [itemData, setItemData] = useState<IItemDisplay>({});
   const [optionsIsOpen, setOptionsIsOpen] = useState(false);
   const storage = getStorage().selectedProducts[`item${id}`];
-  const [childerAreOpen, setChildrenAreOpen] = useState(false);
-  console.log(getStorage());
+  const [childernAreOpen, setChildrenAreOpen] = useState(false);
+  console.log("a");
 
   const openChildren = () => {
-    setChildrenAreOpen(!childerAreOpen);
+    setChildrenAreOpen(!childernAreOpen);
   };
   const showOptions = (value: boolean) => {
     setOptionsIsOpen(value);
@@ -62,57 +62,55 @@ const Item = (props: IItemProps) => {
           </div>
         </td>
       </tr>
-      {childerAreOpen && (
-        <>
-          <tr>
-            <td></td>
-            <td colSpan={7}>
-              <table
-                cellPadding="0"
-                cellSpacing="0"
-                className={Styles.productsTable}>
-                <tbody>
-                  <tr className={Styles.productsHeader}>
-                    <th>#</th>
-                    <th>SKU</th>
-                    <th>Name</th>
+      {childernAreOpen && (
+        <tr>
+          <td></td>
+          <td colSpan={7}>
+            <table
+              cellPadding="0"
+              cellSpacing="0"
+              className={Styles.productsTable}>
+              <tbody>
+                <tr className={Styles.productsHeader}>
+                  <th>#</th>
+                  <th>SKU</th>
+                  <th>Name</th>
 
-                    <th>Price</th>
-                    <th>Qty</th>
-                    <th>Disc</th>
-                    <th>Total</th>
-                  </tr>
-                  {Object.keys(storage).map((product, index) => {
-                    const prop = storage[product];
-                    prop.hasBeenSelected = true;
-                    return <Product key={`prod${index}`} {...prop} />;
-                  })}
-                  <tr className={Styles.orderSummary}></tr>
-                  <tr className={Styles.orderSummary}>
-                    <td colSpan={3}></td>
-                    <td colSpan={3}>Subtotal</td>
-                    <td colSpan={2}>${itemData.total}</td>
-                  </tr>
-                  <tr className={Styles.orderSummary}>
-                    <td colSpan={3}></td>
-                    <td colSpan={3}>Shipping</td>
-                    <td colSpan={2}>${itemData.shipping}</td>
-                  </tr>
-                  <tr className={Styles.orderSummary}>
-                    <td colSpan={3}></td>
-                    <td colSpan={3}>Discount</td>
-                    <td colSpan={2}>${itemData.discount}</td>
-                  </tr>
-                  <tr className={Styles.orderSummary}>
-                    <td colSpan={3}></td>
-                    <td colSpan={3}>Total</td>
-                    <td colSpan={2}>${itemData.grandTotal}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-        </>
+                  <th>Price</th>
+                  <th>Qty</th>
+                  <th>Disc</th>
+                  <th>Total</th>
+                </tr>
+                {Object.keys(storage).map((product, index) => {
+                  const prop = storage[product];
+                  prop.hasBeenSelected = true;
+                  return <Product key={`prod${index}`} {...prop} />;
+                })}
+                <tr className={Styles.orderSummary}></tr>
+                <tr className={Styles.orderSummary}>
+                  <td colSpan={3}></td>
+                  <td colSpan={3}>Subtotal</td>
+                  <td colSpan={2}>${itemData.total}</td>
+                </tr>
+                <tr className={Styles.orderSummary}>
+                  <td colSpan={3}></td>
+                  <td colSpan={3}>Shipping</td>
+                  <td colSpan={2}>${itemData.shipping}</td>
+                </tr>
+                <tr className={Styles.orderSummary}>
+                  <td colSpan={3}></td>
+                  <td colSpan={3}>Discount</td>
+                  <td colSpan={2}>${itemData.discount}</td>
+                </tr>
+                <tr className={Styles.orderSummary}>
+                  <td colSpan={3}></td>
+                  <td colSpan={3}>Total</td>
+                  <td colSpan={2}>${itemData.grandTotal}</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
       )}
     </>
   );

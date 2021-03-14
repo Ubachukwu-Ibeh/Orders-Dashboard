@@ -58,7 +58,7 @@ const Order = () => {
             {Object.keys(storage ? storage.selectedProducts : []).map(
               (item, index) => {
                 const props = {
-                  id: Number(item.slice(3))
+                  id: Number(item.slice(4))
                 };
                 return <Item key={index} {...props} />;
               }

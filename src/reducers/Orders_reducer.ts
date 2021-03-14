@@ -12,7 +12,7 @@ const orderReducer = (state: ISelectedProducts, action: IOrderAction) => {
       });
       state.preSelect = [];
       setStorage(state);
-      return state;
+      return { ...state };
     }
 
     case actionTypes.REMOVE_PRODUCT: {
@@ -23,14 +23,14 @@ const orderReducer = (state: ISelectedProducts, action: IOrderAction) => {
         delete state.selectedProducts[product];
       }
       setStorage(state);
-      return state;
+      return { ...state };
     }
 
     case actionTypes.PRE_ADD_PRODUCT: {
       if (action.payload.productData) {
         state.preSelect.push(action.payload.productData);
       }
-      return state;
+      return { ...state };
     }
 
     case actionTypes.PRE_REMOVE_PRODUCT: {
@@ -39,7 +39,7 @@ const orderReducer = (state: ISelectedProducts, action: IOrderAction) => {
       );
       productToDelete &&
         state.preSelect.splice(state.preSelect.indexOf(productToDelete), 1);
-      return state;
+      return { ...state };
     }
 
     case actionTypes.PRE_REPLACE_PRODUCT: {
@@ -47,7 +47,7 @@ const orderReducer = (state: ISelectedProducts, action: IOrderAction) => {
       if (newData) {
         state.preSelect[action.payload.id] = newData;
       }
-      return state;
+      return { ...state };
     }
 
     default:
