@@ -11,9 +11,9 @@ import {
 import { useDispatch, createSelectorHook } from "react-redux";
 import * as orderActionTypes from "../../../../actionTypes/Orders_actionTypes";
 
-type IStore = {
+interface IStore {
   orderReducer: ISelectedProducts;
-};
+}
 const useSelector = createSelectorHook<IStore>();
 
 const ProductTable = (props: IProductTableProps) => {
