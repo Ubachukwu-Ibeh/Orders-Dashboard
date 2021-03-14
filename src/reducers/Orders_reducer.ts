@@ -56,7 +56,6 @@ const orderReducer = (
 
     case ordersActionTypes.CLEAR_PRESELECT: {
       state.preSelect = [];
-      setStorage(state);
       return { ...state };
     }
 
