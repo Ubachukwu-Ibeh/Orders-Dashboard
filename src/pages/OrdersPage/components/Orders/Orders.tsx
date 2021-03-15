@@ -10,7 +10,7 @@ export const OrderContext = React.createContext<React.Dispatch<
 
 const Order = () => {
   let [isOpen, setIsOpen] = useState(false);
-  let [resetOrdersList, setResetOrdersList] = useState(false);
+  let [, setResetOrdersList] = useState(false);
   const storage = getStorage();
   const props = {
     setIsOpen
