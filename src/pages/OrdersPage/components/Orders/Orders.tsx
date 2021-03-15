@@ -4,14 +4,17 @@ import ProductTable from "../ProductTable/ProductTable";
 import Item from "../Item/Item";
 import { getStorage } from "../../../../utils/localStorage";
 
-// const OrderContext = React.createContext()
+export const OrderContext = React.createContext<React.Dispatch<
+  React.SetStateAction<boolean>
+> | null>(null);
+
 const Order = () => {
   let [isOpen, setIsOpen] = useState(false);
+  let [resetOrdersList, setResetOrdersList] = useState(false);
   const storage = getStorage();
   const props = {
     setIsOpen
   };
-
   const openOrdersList = () => {
     setIsOpen(!isOpen);
   };
@@ -45,19 +48,21 @@ const Order = () => {
           </tbody>
         </table>
       </div>
-      <table cellSpacing="0" cellPadding="0" className={Styles.itemTable}>
-        <tbody>
-          {Object.keys(storage ? storage.selectedProducts : []).map(
-            (item, index) => {
-              const props = {
-                id: Number(item.slice(4))
-              };
-              return <Item key={index} {...props} />;
-            }
-          )}
-        </tbody>
-      </table>
-      {isOpen && <ProductTable {...props} />}
+      <OrderContext.Provider value={setResetOrdersList}>
+        <table cellSpacing="0" cellPadding="0" className={Styles.itemTable}>
+          <tbody>
+            {Object.keys(storage ? storage.selectedProducts : []).map(
+              (item, index) => {
+                const props = {
+                  id: Number(item.slice(4))
+                };
+                return <Item key={index} {...props} />;
+              }
+            )}
+          </tbody>
+        </table>
+        {isOpen && <ProductTable {...props} />}
+      </OrderContext.Provider>
     </div>
   );
 };
