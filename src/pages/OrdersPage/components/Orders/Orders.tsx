@@ -51,14 +51,13 @@ const Order = () => {
       <OrderContext.Provider value={setResetOrdersList}>
         <table cellSpacing="0" cellPadding="0" className={Styles.itemTable}>
           <tbody>
-            {Object.keys(storage ? storage.selectedProducts : []).map(
-              (item, index) => {
-                const props = {
-                  id: Number(item.slice(4))
-                };
-                return <Item key={index} {...props} />;
-              }
-            )}
+            {Object.keys(storage ? storage.selectedProducts : []).map(item => {
+              const id = Number(item.slice(4));
+              const props = {
+                id
+              };
+              return <Item key={id} {...props} />;
+            })}
           </tbody>
         </table>
         {isOpen && <ProductTable {...props} />}
