@@ -6,14 +6,11 @@ import Product from "../Product/Product";
 import {
   IProductData,
   IProductTableProps,
-  ISelectedProducts
+  IStore
 } from "../../../../interfaces/interfaces";
 import { useDispatch, createSelectorHook } from "react-redux";
 import * as orderActionTypes from "../../../../actionTypes/orderActionTypes";
 
-interface IStore {
-  orderReducer: ISelectedProducts;
-}
 const useSelector = createSelectorHook<IStore>();
 
 const ProductTable = (props: IProductTableProps) => {

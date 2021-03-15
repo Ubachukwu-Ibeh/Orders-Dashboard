@@ -53,3 +53,7 @@ export interface IItemDisplay {
   grandTotal?: string;
   profitPercentage?: number;
 }
+
+export interface IStore {
+  orderReducer: ISelectedProducts;
+}

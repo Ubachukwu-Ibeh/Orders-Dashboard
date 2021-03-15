@@ -1,10 +1,10 @@
-import React, { useState, useReducer } from "react";
+import React, { useState } from "react";
 import Styles from "./style/Orders.module.scss";
 import ProductTable from "../ProductTable/ProductTable";
 import Item from "../Item/Item";
-import { ISelectedProducts } from "../../../../interfaces/interfaces";
 import { getStorage } from "../../../../utils/localStorage";
 
+// const OrderContext = React.createContext()
 const Order = () => {
   let [isOpen, setIsOpen] = useState(false);
   const storage = getStorage();
