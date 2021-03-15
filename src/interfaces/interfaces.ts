@@ -24,18 +24,17 @@ export interface IOrderAction {
   payload: IOrderActionPayload;
 }
 
-interface ISelected {
-  [name: string]: IItem;
-}
-
 export interface IItem {
   [name: string]: IProductData;
+}
+
+interface ISelected {
+  [name: string]: IItem;
 }
 
 export interface ISelectedProducts {
   preSelect: Array<IProductData>;
   selectedProducts: ISelected;
-  dispatch: React.Dispatch<IOrderAction> | Function;
 }
 
 export interface IProductTableProps {
@@ -53,4 +52,8 @@ export interface IItemDisplay {
   discount?: number;
   grandTotal?: string;
   profitPercentage?: number;
+}
+
+export interface IStore {
+  orderReducer: ISelectedProducts;
 }

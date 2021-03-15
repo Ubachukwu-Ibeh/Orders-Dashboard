@@ -1,24 +1,20 @@
-import React, { useState, useReducer } from "react";
+import React, { useState } from "react";
 import Styles from "./style/Orders.module.scss";
-import { selectedProducts } from "../../../../stores/SelectedProducts_store";
 import ProductTable from "../ProductTable/ProductTable";
-import orderReducer from "../../../../reducers/Orders_reducer";
 import Item from "../Item/Item";
-import { ISelectedProducts } from "../../../../interfaces/interfaces";
 import { getStorage } from "../../../../utils/localStorage";
 
-export const OrdersContext: React.Context<ISelectedProducts> = React.createContext(
-  selectedProducts
-);
+export const OrderContext = React.createContext<React.Dispatch<
+  React.SetStateAction<boolean>
+> | null>(null);
 
 const Order = () => {
   let [isOpen, setIsOpen] = useState(false);
-  let [state, dispatch] = useReducer(orderReducer, selectedProducts);
+  let [, setResetOrdersList] = useState(false);
   const storage = getStorage();
   const props = {
     setIsOpen
   };
-
   const openOrdersList = () => {
     setIsOpen(!isOpen);
   };
@@ -52,21 +48,20 @@ const Order = () => {
           </tbody>
         </table>
       </div>
-      <OrdersContext.Provider value={{ ...state, dispatch }}>
+      <OrderContext.Provider value={setResetOrdersList}>
         <table cellSpacing="0" cellPadding="0" className={Styles.itemTable}>
           <tbody>
-            {Object.keys(storage ? storage.selectedProducts : []).map(
-              (item, index) => {
-                const props = {
-                  id: Number(item.slice(3))
-                };
-                return <Item key={index} {...props} />;
-              }
-            )}
+            {Object.keys(storage ? storage.selectedProducts : []).map(item => {
+              const id = Number(item.slice(4));
+              const props = {
+                id
+              };
+              return <Item key={id} {...props} />;
+            })}
           </tbody>
         </table>
         {isOpen && <ProductTable {...props} />}
-      </OrdersContext.Provider>
+      </OrderContext.Provider>
     </div>
   );
 };

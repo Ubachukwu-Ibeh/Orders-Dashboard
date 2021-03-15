@@ -1,4 +1,4 @@
-.main{
+.main {
     margin: auto;
     margin-top: 10px;
     position: relative;
@@ -9,20 +9,24 @@
     flex-direction: column;
     border: 1px solid #dddddd;
     border-radius: 10px;
-    p{
+
+    p {
         font-weight: 500;
         margin: auto;
         padding: 10px 30px;
         width: 100px;
-        &:hover{
+
+        &:hover {
             background-color: #f7f7f7;
         }
     }
-    p:first-child{
+
+    p:first-child {
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
     }
-    p:last-child{
+
+    p:last-child {
         border-bottom-left-radius: 10px;
         border-bottom-right-radius: 10px;
     }

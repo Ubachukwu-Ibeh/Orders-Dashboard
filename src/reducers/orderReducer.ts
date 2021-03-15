@@ -1,10 +1,14 @@
 import { ISelectedProducts, IOrderAction } from "../interfaces/interfaces";
 import { setStorage } from "../utils/localStorage";
-import * as actionTypes from "../actions/Orders_actions";
+import selectedProducts from "../stores/orderStore";
+import * as ordersActionTypes from "../actionTypes/orderActionTypes";
 
-const orderReducer = (state: ISelectedProducts, action: IOrderAction) => {
+const orderReducer = (
+  state: ISelectedProducts = selectedProducts,
+  action: IOrderAction
+) => {
   switch (action.type) {
-    case actionTypes.ADD_PRODUCT: {
+    case ordersActionTypes.ADD_PRODUCT: {
       const key = `item${action.payload.id}`;
       state.selectedProducts[key] = {};
       state.preSelect.forEach((product, index) => {
@@ -12,10 +16,10 @@ const orderReducer = (state: ISelectedProducts, action: IOrderAction) => {
       });
       state.preSelect = [];
       setStorage(state);
-      return state;
+      return { ...state };
     }
 
-    case actionTypes.REMOVE_PRODUCT: {
+    case ordersActionTypes.REMOVE_PRODUCT: {
       const product = Object.keys(state.selectedProducts).find(
         name => name.slice(0, 4) + action.payload.id === name
       );
@@ -23,31 +27,36 @@ const orderReducer = (state: ISelectedProducts, action: IOrderAction) => {
         delete state.selectedProducts[product];
       }
       setStorage(state);
-      return state;
+      return { ...state };
     }
 
-    case actionTypes.PRE_ADD_PRODUCT: {
+    case ordersActionTypes.PRE_ADD_PRODUCT: {
       if (action.payload.productData) {
         state.preSelect.push(action.payload.productData);
       }
-      return state;
+      return { ...state };
     }
 
-    case actionTypes.PRE_REMOVE_PRODUCT: {
+    case ordersActionTypes.PRE_REMOVE_PRODUCT: {
       const productToDelete = state.preSelect.find(
         product => product.id === action.payload.id
       );
       productToDelete &&
         state.preSelect.splice(state.preSelect.indexOf(productToDelete), 1);
-      return state;
+      return { ...state };
     }
 
-    case actionTypes.PRE_REPLACE_PRODUCT: {
+    case ordersActionTypes.PRE_REPLACE_PRODUCT: {
       const newData = action.payload.productData;
       if (newData) {
         state.preSelect[action.payload.id] = newData;
       }
-      return state;
+      return { ...state };
+    }
+
+    case ordersActionTypes.CLEAR_PRESELECT: {
+      state.preSelect = [];
+      return { ...state };
     }
 
     default:

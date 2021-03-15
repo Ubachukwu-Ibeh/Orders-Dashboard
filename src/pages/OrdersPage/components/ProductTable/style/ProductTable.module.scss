@@ -1,4 +1,4 @@
-.black{
+.black {
     width: inherit;
     height: inherit;
     background-color: rgba(0, 0, 0, 0.2);
@@ -6,7 +6,8 @@
     position: fixed;
     z-index: 1;
 }
-.main{
+
+.main {
     background-color: #fff;
     margin: auto;
     width: 90%;
@@ -14,32 +15,41 @@
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0px 3px 8px hsla(0, 0%, 0%, 0.2);
-    tr{
-        td, th{
+
+    tr {
+
+        td,
+        th {
             border-bottom: 1px solid #dddddd;
-          }
-        th{
+        }
+
+        th {
             width: 10%;
         }
-        th:nth-child(3){
+
+        th:nth-child(3) {
             width: 30%;
         }
     }
+
     tr:first-child {
         height: 50px;
-      }
-    tr:not(:first-child){
-        &:hover{
+    }
+
+    tr:not(:first-child) {
+        &:hover {
             cursor: pointer;
         }
     }
 }
-.finishOrder{
+
+.finishOrder {
     margin: auto;
     width: 95%;
     display: flex;
     justify-content: flex-end;
-    button{
+
+    button {
         margin-top: 30px;
         width: 150px;
         height: 30px;

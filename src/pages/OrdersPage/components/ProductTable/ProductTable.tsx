@@ -1,18 +1,23 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import generateProduct from "../../../../utils/productGenerator";
+import { getStorage } from "../../../../utils/localStorage";
 import Styles from "./style/ProductTable.module.scss";
 import Product from "../Product/Product";
-import { OrdersContext } from "../Orders/Orders";
 import {
   IProductData,
-  IProductTableProps
+  IProductTableProps,
+  IStore
 } from "../../../../interfaces/interfaces";
-import * as orderActionTypes from "../../../../actions/Orders_actions";
+import { useDispatch, createSelectorHook } from "react-redux";
+import * as orderActionTypes from "../../../../actionTypes/orderActionTypes";
+
+const useSelector = createSelectorHook<IStore>();
 
 const ProductTable = (props: IProductTableProps) => {
   const { setIsOpen } = props;
-  const ordersContext = useContext(OrdersContext);
   let [products, setProducts] = useState<Array<IProductData>>([]);
+  const store = useSelector(state => state.orderReducer);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const generatedProducts: Array<IProductData> = [];
@@ -20,23 +25,43 @@ const ProductTable = (props: IProductTableProps) => {
       generatedProducts.push(generateProduct());
     }
     setProducts(generatedProducts);
-  }, [ordersContext.selectedProducts]);
+  }, [store.selectedProducts]);
 
-  const finishOrder = () => {
+  const finishOrder = (val?: boolean) => {
     setIsOpen(prev => !prev);
 
-    if (ordersContext.preSelect.length === 0) return;
-    ordersContext.dispatch({
+    if (val) {
+      dispatch({
+        type: orderActionTypes.CLEAR_PRESELECT,
+        payload: { id: 0 }
+      });
+      return;
+    }
+
+    if (store.preSelect.length === 0) return;
+
+    const getId = () => {
+      const storage = getStorage();
+      const selectedProducts =
+        storage && Object.keys(storage.selectedProducts).slice(-1)[0];
+      if (selectedProducts) {
+        return Number(selectedProducts.slice(4)) + 1;
+      } else {
+        return 0;
+      }
+    };
+
+    dispatch({
       type: orderActionTypes.ADD_PRODUCT,
       payload: {
-        id: Object.keys(ordersContext.selectedProducts).length
+        id: getId()
       }
     });
   };
 
   return (
     <div
-      onClick={() => finishOrder()}
+      onClick={() => finishOrder(true)}
       className={Styles.black}
       style={{ display: products[0] ? "flex" : "none" }}>
       <div className={Styles.main} onClick={e => e.stopPropagation()}>

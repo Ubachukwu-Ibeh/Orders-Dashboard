@@ -1,12 +1,13 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { IProductData } from "../../../../interfaces/interfaces";
 import Styles from "./style/Product.module.scss";
-import { OrdersContext } from "../Orders/Orders";
-import * as orderActionTypes from "../../../../actions/Orders_actions";
+import * as orderActionTypes from "../../../../actionTypes/orderActionTypes";
+import { useDispatch } from "react-redux";
 
 const Product = (props: IProductData) => {
   let [selected, setSelected] = useState(false);
-  const ordersContext = useContext(OrdersContext);
+  const dispatch = useDispatch();
+
   const [productData, setProductData] = useState({ ...props });
   const [arrowsVisible, setArrowsVisible] = useState(false);
   const { id, hasBeenSelected } = productData;
@@ -28,11 +29,11 @@ const Product = (props: IProductData) => {
 
     productData.total = productData.quantity * productData.price;
 
-    ordersContext.dispatch({
+    dispatch({
       type: orderActionTypes.PRE_REPLACE_PRODUCT,
       payload: {
         id,
-        productData: { ...productData }
+        productData
       }
     });
 
@@ -45,15 +46,15 @@ const Product = (props: IProductData) => {
     setSelected(selected);
 
     if (selected) {
-      ordersContext.dispatch({
+      dispatch({
         type: orderActionTypes.PRE_ADD_PRODUCT,
         payload: {
           id,
-          productData: { ...productData }
+          productData
         }
       });
     } else {
-      ordersContext.dispatch({
+      dispatch({
         type: orderActionTypes.PRE_REMOVE_PRODUCT,
         payload: {
           id
@@ -62,13 +63,9 @@ const Product = (props: IProductData) => {
     }
   };
 
-  const revealArrows = () => {
+  const revealArrows = (value: boolean) => {
     if (hasBeenSelected) return;
-    setArrowsVisible(true);
-  };
-  const hideArrows = () => {
-    if (hasBeenSelected) return;
-    setArrowsVisible(false);
+    setArrowsVisible(value);
   };
 
   const handleSelectedStatus = () => {
@@ -83,8 +80,8 @@ const Product = (props: IProductData) => {
     <tr
       className={handleSelectedStatus()}
       onClick={() => handleSelect()}
-      onMouseEnter={() => revealArrows()}
-      onMouseLeave={() => hideArrows()}>
+      onMouseEnter={() => revealArrows(true)}
+      onMouseLeave={() => revealArrows(false)}>
       <td>
         <div
           className={Styles.product_img}
@@ -97,13 +94,11 @@ const Product = (props: IProductData) => {
       <td>
         <div className={Styles.quantity}>
           <p>{productData.quantity} x</p>
-          {arrowsVisible ? (
+          {arrowsVisible && (
             <div>
               <p onClick={e => setQuantity(e, "increase")}>▲</p>
               <p onClick={e => setQuantity(e, "decrease")}>▼</p>
             </div>
-          ) : (
-            <></>
           )}
         </div>
       </td>
