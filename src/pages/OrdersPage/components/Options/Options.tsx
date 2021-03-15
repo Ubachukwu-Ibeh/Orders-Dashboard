@@ -1,5 +1,5 @@
 import React from "react";
-import * as orderActionTypes from "../../../../actionTypes/Orders_actionTypes";
+import * as orderActionTypes from "../../../../actionTypes/orderActionTypes";
 import Styles from "./style/Options.module.scss";
 import { IItemProps } from "../../../../interfaces/interfaces";
 import { useDispatch } from "react-redux";

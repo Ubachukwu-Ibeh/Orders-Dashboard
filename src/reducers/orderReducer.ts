@@ -1,7 +1,7 @@
 import { ISelectedProducts, IOrderAction } from "../interfaces/interfaces";
 import { setStorage } from "../utils/localStorage";
-import selectedProducts from "../stores/SelectedProducts_store";
-import * as ordersActionTypes from "../actionTypes/Orders_actionTypes";
+import selectedProducts from "../stores/orderStore";
+import * as ordersActionTypes from "../actionTypes/orderActionTypes";
 
 const orderReducer = (
   state: ISelectedProducts = selectedProducts,

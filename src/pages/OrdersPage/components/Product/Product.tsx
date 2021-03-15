@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IProductData } from "../../../../interfaces/interfaces";
 import Styles from "./style/Product.module.scss";
-import * as orderActionTypes from "../../../../actionTypes/Orders_actionTypes";
+import * as orderActionTypes from "../../../../actionTypes/orderActionTypes";
 import { useDispatch } from "react-redux";
 
 const Product = (props: IProductData) => {

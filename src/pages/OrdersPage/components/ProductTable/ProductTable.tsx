@@ -9,7 +9,7 @@ import {
   ISelectedProducts
 } from "../../../../interfaces/interfaces";
 import { useDispatch, createSelectorHook } from "react-redux";
-import * as orderActionTypes from "../../../../actionTypes/Orders_actionTypes";
+import * as orderActionTypes from "../../../../actionTypes/orderActionTypes";
 
 interface IStore {
   orderReducer: ISelectedProducts;
