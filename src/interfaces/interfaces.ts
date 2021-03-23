@@ -1,10 +1,4 @@
-import { SetStateAction } from "react";
-
-export interface IItemProps {
-  id: number;
-}
-
-export interface IProductData extends IItemProps {
+export interface IProductData {
   color: string;
   product_id: number;
   name: string;
@@ -13,10 +7,12 @@ export interface IProductData extends IItemProps {
   hasBeenSelected: boolean;
   quantity: number;
   total: number;
+  id: number;
 }
 
-interface IOrderActionPayload extends IItemProps {
+interface IOrderActionPayload {
   productData?: IProductData;
+  id: number;
 }
 
 export interface IOrderAction {
@@ -38,7 +34,7 @@ export interface ISelectedProducts {
 }
 
 export interface IProductTableProps {
-  setIsOpen: React.Dispatch<SetStateAction<boolean>>;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface IItemDisplay {

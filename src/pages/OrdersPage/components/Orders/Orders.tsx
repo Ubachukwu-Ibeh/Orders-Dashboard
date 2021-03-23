@@ -12,9 +12,6 @@ const Order = () => {
   let [isOpen, setIsOpen] = useState(false);
   let [, setResetOrdersList] = useState(false);
   const storage = getStorage();
-  const props = {
-    setIsOpen
-  };
   const openOrdersList = () => {
     setIsOpen(!isOpen);
   };
@@ -62,15 +59,12 @@ const Order = () => {
               {Object.keys(storage ? storage.selectedProducts : []).map(
                 item => {
                   const id = Number(item.slice(4));
-                  const props = {
-                    id
-                  };
-                  return <Item key={id} {...props} />;
+                  return <Item key={id} id={id} />;
                 }
               )}
             </tbody>
           </table>
-          {isOpen && <ProductTable {...props} />}
+          {isOpen && <ProductTable setIsOpen={setIsOpen} />}
         </OrderContext.Provider>
       </div>
     </div>

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Styles from "./style/Item.module.scss";
-import { IItemProps, IItemDisplay } from "../../../../interfaces/interfaces";
+import { IItemDisplay } from "../../../../interfaces/interfaces";
 import Product from "../Product/Product";
 import resolveData from "./resolveData";
 import Options from "../Options/Options";
 import { getStorage } from "../../../../utils/localStorage";
 
-const Item = ({ id }: IItemProps) => {
+const Item = ({ id }: { id: number }) => {
   const [itemData, setItemData] = useState<IItemDisplay>({});
   const [optionsIsOpen, setOptionsIsOpen] = useState(false);
   const storage = getStorage().selectedProducts[`item${id}`];

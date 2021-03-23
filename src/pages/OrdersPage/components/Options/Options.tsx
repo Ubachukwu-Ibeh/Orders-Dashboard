@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
 import * as orderActionTypes from "../../../../actionTypes/orderActionTypes";
 import Styles from "./style/Options.module.scss";
-import { IItemProps } from "../../../../interfaces/interfaces";
 import { useDispatch } from "react-redux";
 import { OrderContext } from "../Orders/Orders";
 
-const Options = ({ id }: IItemProps) => {
+const Options = ({ id }: { id: number }) => {
   const dispatch = useDispatch();
   const setResetOrdersList = useContext(OrderContext);
 
