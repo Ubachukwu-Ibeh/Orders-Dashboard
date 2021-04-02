@@ -6,7 +6,7 @@ import resolveData from "./resolveData";
 import Options from "../Options/Options";
 import { getStorage } from "../../../../utils/localStorage";
 
-const Item = ({ id }: { id: number }) => {
+const Item: React.FC<{ id: number }> = ({ id }) => {
   const [itemData, setItemData] = useState<IItemDisplay>({});
   const [optionsIsOpen, setOptionsIsOpen] = useState(false);
   const storage = getStorage().selectedProducts[`item${id}`];
@@ -26,12 +26,7 @@ const Item = ({ id }: { id: number }) => {
     <>
       <tr className={Styles.main} onClick={() => openChildren()}>
         <td>
-          <input
-            type="checkbox"
-            name=""
-            id=""
-            onClick={e => e.stopPropagation()}
-          />
+          <input type="checkbox" onClick={e => e.stopPropagation()} />
         </td>
         <td>{itemData.order_id}</td>
         <td>{itemData.time} min ago</td>

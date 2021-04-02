@@ -4,7 +4,7 @@ import Styles from "./style/Options.module.scss";
 import { useDispatch } from "react-redux";
 import { OrderContext } from "../Orders/Orders";
 
-const Options = ({ id }: { id: number }) => {
+const Options: React.FC<{ id: number }> = ({ id }) => {
   const dispatch = useDispatch();
   const setResetOrdersList = useContext(OrderContext);
 

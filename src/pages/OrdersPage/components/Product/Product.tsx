@@ -4,7 +4,7 @@ import Styles from "./style/Product.module.scss";
 import * as orderActionTypes from "../../../../actionTypes/orderActionTypes";
 import { useDispatch } from "react-redux";
 
-const Product = (props: IProductData) => {
+const Product: React.FC<IProductData> = props => {
   let [selected, setSelected] = useState(false);
   const dispatch = useDispatch();
 

@@ -13,7 +13,7 @@ import * as orderActionTypes from "../../../../actionTypes/orderActionTypes";
 
 const useSelector = createSelectorHook<IStore>();
 
-const ProductTable = (props: IProductTableProps) => {
+const ProductTable: React.FC<IProductTableProps> = props => {
   const { setIsOpen } = props;
   let [products, setProducts] = useState<Array<IProductData>>([]);
   const store = useSelector(state => state.orderReducer);
